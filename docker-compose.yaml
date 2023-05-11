@@ -1,0 +1,13 @@
+services:
+  orbslam2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    tty: true
+    stdin_open: true
+    environment:
+      - DISPLAY=unix$DISPLAY
+    volumes:
+      - /home/mykola/datasets/:/datasets
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    command: /bin/bash

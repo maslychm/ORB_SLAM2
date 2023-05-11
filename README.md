@@ -1,3 +1,39 @@
+# Version with working UI through a docker container
+
+
+[Official ORB SLAM 2 GitHub Repository](https://github.com/raulmur/ORB_SLAM2/)   
+[Version of ORB SLAM 2 that we use](https://github.com/maslychm/ORB_SLAM2)
+
+### Info
+
+This version runs inside a docker container based on this [nvidia/opengl](https://hub.docker.com/r/nvidia/opengl) docker hub, on this [specific container](https://gitlab.com/nvidia/container-images/opengl/blob/ubuntu20.04/base/Dockerfile).   
+Tested on a PopOS 22.04 (that's based on Ubuntu 22.04) host system. 
+
+When doing the initial setup, I ran into an issue that the UI can not be displayed onto the host system from a docker container. This prevented the SLAM visualizer from displaying. In the process of fixing that, I followed steps from [this NVIDIA Container Toolkit installation guide](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html), after which I could successfully run the base nvidia/opengl container. However, I'm not sure if all the steps were required.
+
+### Requirements
+
+- docker
+- The docker container automatically builds all the requirements, still, they are: OpenCV, Pangolin, Eigen.
+- (Probably) see the nvidia toolkit instruction above
+
+### Installation
+
+```bash
+# through compose
+docker compose run orbslam2
+
+# OR through direct commands
+docker run -it -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=unix$DISPLAY -v /home/mykola/datasets/:/datasets $(docker build -q .)
+```
+
+### Running an example
+
+```bash
+cd ORB_SLAM2/
+./Examples/Monocular/mono_tum Vocabulary/ORBvoc.txt Examples/Monocular/TUM1.yaml /datasets/rgbd_dataset_freiburg1_xyz/
+```
+
 # ORB-SLAM2
 **Authors:** [Raul Mur-Artal](http://webdiis.unizar.es/~raulmur/), [Juan D. Tardos](http://webdiis.unizar.es/~jdtardos/), [J. M. M. Montiel](http://webdiis.unizar.es/~josemari/) and [Dorian Galvez-Lopez](http://doriangalvez.com/) ([DBoW2](https://github.com/dorian3d/DBoW2))
 
