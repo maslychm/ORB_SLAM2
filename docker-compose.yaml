@@ -6,8 +6,9 @@ services:
     tty: true
     stdin_open: true
     environment:
-      - DISPLAY=unix$DISPLAY
+      - DISPLAY=$DISPLAY
     volumes:
       - /home/mykola/datasets/:/datasets
       - /tmp/.X11-unix:/tmp/.X11-unix
+      - /dev/dri:/dev/dri
     command: /bin/bash
